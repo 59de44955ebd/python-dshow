@@ -1,17 +1,17 @@
 # python-dshow - DirectShow for Python
 
-`python-dshow` is a Python module for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a `HWND` - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size if this window changes.
+`python-dshow` is a Python module for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a `HWND` - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size of this window changes.
 
 Demos are provided for the following GUI toolkits:
-* [PyQt5](demo_pyqt5.py)
-* [PyQt6](demo_pyqt6.py)
-* [PySide6](demo_pyside6/)
-* [Tkinter](demo_tkinter.py)
-* [Windows API](demo_winapi.py)
-* [WinForms](demo_winforms.py) (Windows Forms, via [pythonnet](https://pypi.org/project/pythonnet/))
-* [wxPython](demo_wxpython.py)  (wxWidgets)
+- [PyQt5](demo_pyqt5.py)
+- [PyQt6](demo_pyqt6.py)
+- [PySide6](demo_pyside6/)
+- [Tkinter](demo_tkinter.py)
+- [Windows API](demo_winapi.py)
+- [WinForms](demo_winforms.py) (Windows Forms, via [pythonnet](https://pypi.org/project/pythonnet/))
+- [wxPython](demo_wxpython.py)  (wxWidgets)
 
-`python-dshow` comes with a companion folder called `filters` that contains everything needed to load and play a variety of media file formats and codecs. DirectShow filters are loaded directly from the .dll files in this folder, so no filter registration needed, and no danger of [Codec Hell](https://en.wikipedia.org/wiki/DirectShow#Codec_hell).
+`python-dshow` comes with a companion folder called `filters` that contains everything needed to load and play a variety of media file formats and codecs. DirectShow filters are loaded directly from the .dll files in this folder, so no filter registration needed, and no danger of [codec hell](https://en.wikipedia.org/wiki/DirectShow#Codec_hell).
 
 General media support is based on the [LAV Filters](https://github.com/Nevcairiel/LAVFilters), which are in turn based on [FFmpeg](https://ffmpeg.org/). 
 
