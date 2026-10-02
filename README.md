@@ -7,7 +7,7 @@ Demos are provided for the following GUI toolkits:
 * [PyQt6](demo_pyqt6.py)
 * [PySide6](demo_pyside6/)
 * [Tkinter](demo_tkinter.py)
-* [Windows API](demo_winapp.py)
+* [Windows API](demo_winapi.py)
 * [WinForms](demo_winforms.py) (Windows Forms, via [pythonnet](https://pypi.org/project/pythonnet/))
 * [wxPython](demo_wxpython.py)  (wxWidgets)
 
