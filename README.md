@@ -1,6 +1,6 @@
 # python-dshow - DirectShow for Python
 
-`python-dshow` is a Python module for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a `HWND` - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size of this window changes.
+`python-dshow` is a Python package for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a `HWND` - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size of this window changes.
 
 Demos are provided for the following GUI toolkits:
 - [PyQt5](demo_pyqt5.py)
