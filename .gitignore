@@ -1,0 +1,13 @@
+/build/
+/dist/
+/nsis/uninstall_list.nsh
+/releases/
+/stuff/
+/test_files/
+_backup.rar
+/*.spec
+/plugins/
+/engine_directshow/
+/engine_mpv/
+/engine_vlc/
+/settings.json
