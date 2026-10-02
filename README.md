@@ -28,6 +28,10 @@ DSHOW_SETTINGS.FILTER_DIR = "path\\to\\filters"
 ...
 ```
 
+## About DirectShow
+
+Microsoft decided to label [DirectShow](https://en.wikipedia.org/wiki/DirectShow) as "deprecated", but of course it still works perfectly fine in recent Windows versions like Windows 11. It's still the base of some of the best desktop media players that are available for Windows, like [MPC-HC](https://github.com/clsid2/mpc-hc) and [MPC-BE](https://github.com/Aleksoid1978/MPC-BE). And it's much easier to use in code outside the gated Microsoft cosmos (UWP, Windows Forms etc.) than its alleged successor [Media Foundation](https://en.wikipedia.org/wiki/Media_Foundation). Try yourself to write a simple media player based on Media Foundation in e.g. plain C, Python or anything else based on libffi, and you will see that this is true.
+
 ## Usage
 
 ### Minimal code, standalone mode:
