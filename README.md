@@ -1,6 +1,6 @@
 # python-dshow - DirectShow for Python
 
-`python-dshow` is a Python package for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a `HWND` - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size of this window changes.
+`python-dshow` is a Python package for Windows x64 that allows to quickly add Multimedia support to interactive GUI applications. Its core is a `Player` object that accepts any kind of window/control - anything that has a window handle (`HWND`) - and then renders video (if there is video, not just audio) into this window. The video is automatically resized whenever the size of this window changes.
 
 Demos are provided for the following GUI toolkits:
 - [PyQt5](demo_pyqt5.py)
@@ -11,13 +11,13 @@ Demos are provided for the following GUI toolkits:
 - [WinForms](demo_winforms.py) (Windows Forms, via [pythonnet](https://pypi.org/project/pythonnet/))
 - [wxPython](demo_wxpython.py)  (wxWidgets)
 
-`python-dshow` comes with a companion folder called `filters` that contains everything needed to load and play a variety of media file formats and codecs. DirectShow filters are loaded directly from the .dll files in this folder, so no filter registration needed, and no danger of [codec hell](https://en.wikipedia.org/wiki/DirectShow#Codec_hell).
+`python-dshow` comes with a companion folder called `filters` that contains everything needed to load and play a variety of media file formats and codecs. DirectShow filters are loaded directly from the `.dll` files in this folder, so no filter registration needed, and no danger of [codec hell](https://en.wikipedia.org/wiki/DirectShow#Codec_hell).
 
 General media support is based on the [LAV Filters](https://github.com/Nevcairiel/LAVFilters), which are in turn based on [FFmpeg](https://ffmpeg.org/). 
 
 As Video renderer by default [MPC Video Renderer](https://github.com/Aleksoid1978/VideoRenderer) is used. 
 
-Subtitles support is based on [VSFilter](https://github.com/v0lt/VSFilterBE) (DirectVobSub). Both internal (e.g. subtitle tracks in a .mkv file) and external (e.g. .srt or .vtt files) subtitle sources are supported.
+Subtitles support is based on [VSFilter](https://github.com/v0lt/VSFilterBE) (DirectVobSub). Both internal (e.g. subtitle tracks in a `.mkv` file) and external (e.g. `.srt` or `.vtt` files) subtitle sources are supported.
 
 MIDI support (`.mid` `.rmi` `.kar`) is based on [Bass Audio Source](https://github.com/v0lt/BassAudioSource), [BASSMIDI](https://www.un4seen.com/doc/#bassmidi/bassmidi.html) and a [SoundFont](https://en.wikipedia.org/wiki/SoundFont) file as GM soundbank. By default a rather [small SoundFont file](https://musical-artifacts.com/artifacts/5190) (3 MB, based on GM.dls that comes with Windows) called `soundbank.sf2` is loaded from the `filters` folder. For achieving better MIDI sound quality you can replace this file with a high-quality SoundFont file like e.g. [FluidR3_GM.sf2](https://musical-artifacts.com/artifacts/738) (141 MB) or [Reality_GMGS_falcomod.sf2](https://www.musical-artifacts.com/artifacts/6003) (34 MB).
 
