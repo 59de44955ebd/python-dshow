@@ -45,7 +45,7 @@ class Main():
                 width, height = lparam & 0xFFFF, (lparam >> 16) & 0xFFFF
                 user32.SetWindowPos(self.hwnd_video_frame, 0, 0, 0, width, height - 70, SWP_NOMOVE)
                 user32.SetWindowPos(self.hwnd_button_play, 0, 10, height - 33, 0, 0, SWP_NOSIZE)
-                user32.SetWindowPos(self.hwnd_button_stop, 0, 100, height - 33, 0, 0, SWP_NOSIZE)
+                user32.SetWindowPos(self.hwnd_button_stop, 0, 95, height - 33, 0, 0, SWP_NOSIZE)
                 user32.SetWindowPos(self.hwnd_slider_position, 0, 7, height - 60, width - 14, 23, 0)
                 user32.SetWindowPos(self.hwnd_slider_volume, 0, width - 107, height - 33, 0, 0, SWP_NOSIZE)
 
