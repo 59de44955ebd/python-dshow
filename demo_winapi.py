@@ -6,6 +6,7 @@ from dshow.winapi import *
 
 INITIAL_VOLUME = 50
 POSITION_UPDATE_TIME_MS = 200
+TIMER_ID = 1
 
 
 class Main():
@@ -59,7 +60,7 @@ class Main():
                     lo, hi, = wparam & 0xFFFF, (wparam >> 16) & 0xFFFF
                     if lo == TB_ENDTRACK:
                         return 0
-                    if lo in (TB_PAGEDOWN, TB_PAGEUP):  # Click into slider
+                    elif lo in (TB_PAGEDOWN, TB_PAGEUP):  # Click into slider
                         pt = POINT()
                         user32.GetCursorPos(byref(pt))
                         user32.MapWindowPoints(None, self.hwnd_slider_position, byref(pt), 1)
@@ -67,13 +68,15 @@ class Main():
                         user32.GetWindowRect(self.hwnd_slider_position, byref(rc))
                         hi = int((pt.x - 10) / (rc.right - rc.left - 20) * 2000)
                         user32.SendMessageW(self.hwnd_slider_position, TBM_SETPOS, 1, hi)
+                    elif lo != TB_THUMBPOSITION:
+                        hi = user32.SendMessageW(self.hwnd_slider_position, TBM_GETPOS, 0, 0)
                     self.set_position(hi)
 
                 elif lparam == self.hwnd_slider_volume:
                     lo, hi, = wparam & 0xFFFF, (wparam >> 16) & 0xFFFF
                     if lo == TB_ENDTRACK:
                         return 0
-                    if lo in (TB_PAGEDOWN, TB_PAGEUP):  # Click into slider
+                    elif lo in (TB_PAGEDOWN, TB_PAGEUP):  # Click into slider
                         pt = POINT()
                         user32.GetCursorPos(byref(pt))
                         user32.MapWindowPoints(None, self.hwnd_slider_volume, byref(pt), 1)
@@ -81,6 +84,8 @@ class Main():
                         user32.GetWindowRect(self.hwnd_slider_volume, byref(rc))
                         hi = int((pt.x - 10) / (rc.right - rc.left - 20) * 100)
                         user32.SendMessageW(self.hwnd_slider_volume, TBM_SETPOS, 1, hi)
+                    elif lo != TB_THUMBPOSITION:
+                        hi = user32.SendMessageW(self.hwnd_slider_volume, TBM_GETPOS, 0, 0)
                     self.set_volume(hi)
 
             elif msg == WM_COMMAND:
@@ -185,10 +190,10 @@ class Main():
         user32.PostQuitMessage(0)
 
     def timer_start(self):
-        user32.SetTimer(self.hwnd, 1, POSITION_UPDATE_TIME_MS, 0)  # 1 is our timer id
+        user32.SetTimer(self.hwnd, TIMER_ID, POSITION_UPDATE_TIME_MS, 0)
 
     def timer_stop(self):
-        user32.KillTimer(self.hwnd, 1)
+        user32.KillTimer(self.hwnd, TIMER_ID)
 
     def create_ui(self):
         """Set up the user interface

@@ -154,6 +154,9 @@ class Main:
 
         self.slider_volume.bind("<Button-1>", on_click)
 
+        # Allow sliders to have keyboard focus, so left/right buttons work appropriately
+        root.bind("<Button-1>", lambda e: e.widget.focus_set())
+
     def play_pause(self):
         """Toggle play/pause status
         """

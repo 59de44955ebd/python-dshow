@@ -202,7 +202,8 @@ class Main(WinForms.Form):
         self.Text = "Media Player"
 
     def play_pause(self, *_):
-        """Toggle play/pause status"""
+        """Toggle play/pause status
+        """
         if self.mediaplayer.is_playing():
             self.mediaplayer.pause()
             self.button_play.Text = "Play"
@@ -217,7 +218,8 @@ class Main(WinForms.Form):
             self.is_paused = False
 
     def stop(self, *_):
-        """Stop player"""
+        """Stop player
+        """
         self.mediaplayer.stop()
         self.timer.Stop()
         self.button_play.Text = "Play"
@@ -227,11 +229,13 @@ class Main(WinForms.Form):
         WinForms.Application.Exit()
 
     def set_volume(self, volume):
-        """Set the volume"""
+        """Set the volume
+        """
         self.mediaplayer.set_volume(volume / 100)
 
     def set_position(self, pos):
-        """Set the media time according to the time slider"""
+        """Set the media time according to the time slider
+        """
         self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
 
     def update_ui(self, *_):

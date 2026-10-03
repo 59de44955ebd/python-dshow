@@ -219,7 +219,8 @@ class Main(wx.Frame):
         self.mediaplayer.set_volume(pos / 100)
 
     def set_position(self, pos):
-        """Set the media time according to the time slider"""
+        """Set the media time according to the time slider
+        """
         self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
 
     def update_ui(self, evt):
