@@ -31,19 +31,23 @@ class Player():
     ########################################
     def __init__(
         self,
-        parent_hwnd,
-        volume = .75,
-        auto_resize = True,
-        width = 0, height = 0,
+        parent_hwnd: int,
+        volume: float = .75,
+        auto_resize: bool = True,
+        x: int = 0, y: int = 0, width: int = 320, height: int = 240,
     ):
         self._parent_hwnd = parent_hwnd
-
+        self._auto_resize = auto_resize
         self._listeners = {}
         self._message_map = {}
         self._new_proc = None
         self._old_proc = None
+
+        self._x = x
+        self._y = y
         self._width = width
         self._height = height
+
         self._loop = False
         self._use_ratio = True
         self._forced_ratio = None
@@ -523,6 +527,30 @@ class Player():
     ########################################
     #
     ########################################
+    def _apply_rect(self):
+        if DSHOW_SETTINGS.USE_MPC_RENDERER:
+            if self._use_ratio:
+                if self._height > 0 and (self._width / self._height) > self._ratio_mpc:
+                    cy = self._height
+                    cx = int(self._height * self._ratio_mpc)
+                    x = (self._width - cx) // 2
+                    y = 0
+                else:
+                    cx = self._width
+                    cy = int(self._width / self._ratio_mpc)
+                    x = 0
+                    y = (self._height - cy) // 2
+                self._video_window.SetWindowPosition(self._x + x, self._y + y, cx, cy)
+                self._basic_video.SetDestinationPosition(0, 0, cx, cy)
+            else:
+                self._video_window.SetWindowPosition(self._x, self._y, self._width, self._height)
+                self._basic_video.SetDestinationPosition(0, 0, self._width, self._height)
+        else:
+            self._video_window.SetWindowPosition(self._x, self._y, self._width, self._height)
+
+    ########################################
+    #
+    ########################################
     def has_media(self) -> bool:
         return self._has_media
 
@@ -580,7 +608,11 @@ class Player():
                     self._ratio_mpc = self._forced_ratio or self._ratio_org_mpc
                 else:
                     self._set_keepaspectratio(self._use_ratio and not self._forced_ratio)
-                self._resize(self._width, self._height)
+
+                if self._auto_resize:
+                    self._resize(self._width, self._height)
+                else:
+                    self._apply_rect()
 
                 for k, value in self._image_values.items():
                     if value != 0:
@@ -695,6 +727,14 @@ class Player():
         if not self._has_video:
             raise Exception('E_NOINTERFACE')
         return self._basic_video.GetVideoSize()
+
+    ########################################
+    # Only applicable if auto_resize is False
+    ########################################
+    def set_rect(self, x: int, y: int, width: int, height: int):
+        self._x, self._y, self._width, self._height = x, y, width, height
+        if self._has_video:
+            self._apply_rect()
 
     ########################################
     #
@@ -889,9 +929,9 @@ class Player():
             ) > 0
 
     ########################################
-    # e.g. '4:3', '' to reset to default, None means resize to window
+    # e.g. '4:3', '' to reset to default (DAR), None means stretch to window
     ########################################
-    def set_aspect_ratio(self, ratio: str):
+    def set_aspect_ratio(self, ratio: str | None):
         self._use_ratio = ratio is not None
         if self._use_ratio:
             if ratio:

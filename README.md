@@ -55,7 +55,7 @@ __init__()
     parent_hwnd: int,
     volume: float = .75,  # 0..1
     auto_resize: bool = True,
-    width: int = 0, height: int = 0,
+    x: int = 0, y: int = 0, width: int = 320, height: int = 240,  # Ignored if auto_resize is True
 )
 
 load_media_file(media_file: str) -> bool
@@ -75,12 +75,13 @@ get_size() -> tuple
 get_time() -> float seconds
 get_volume() -> float  # 0..1
 
-set_aspect_ratio(ratio: str)  # e.g. '4:3'
+set_aspect_ratio(ratio: str | None)  # e.g. '4:3', '' for use DAR, None for stretch to window
 set_brightness(value: float)  # -1..1, 0=default
 set_contrast(value: float)  # -1..1, 0=default
 set_hue(value: float)  # -1..1, 0=default
 set_loop(bool)
 set_saturation(value: float)  # -1..1, 0=default
+set_rect(x: int, y: int, width: int, height: int)  # Only applicable if auto_resize is False
 set_time(seconds: float)
 set_volume(float)  # [0..1]
 
