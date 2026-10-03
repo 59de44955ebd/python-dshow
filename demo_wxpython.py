@@ -88,6 +88,13 @@ class Main(wx.Frame):
         else:
             self.slider_position.Disable()
 
+        class FileDropTarget(wx.FileDropTarget):
+            def OnDropFiles(me, x, y, filenames):
+                self.load_file(filenames[0])
+                return True
+
+        self.SetDropTarget(FileDropTarget())
+
         self.Centre()
         self.Show()
 
@@ -159,12 +166,11 @@ class Main(wx.Frame):
         if self.mediaplayer.is_playing():
             self.mediaplayer.pause()
             self.button_play.Label = "Play"
-            self.is_paused = True
             self.timer.Stop()
+            self.is_paused = True
         else:
             if not self.mediaplayer.has_media():
-                self.open_file()
-                return
+                return self.open_file()
             self.mediaplayer.play()
             self.button_play.Label = "Pause"
             self.timer.Start(POSITION_UPDATE_TIME_MS)
@@ -188,12 +194,15 @@ class Main(wx.Frame):
             self.load_file(filename)
 
     def load_file(self, filename):
+        if self.mediaplayer.has_media():
+            self.close_file()
         ok = self.mediaplayer.load_media_file(filename)
         if ok:
             self.media_duration = self.mediaplayer.get_duration()
             self.play_pause()
             self.SetTitle(os.path.basename(filename))
             if self.media_duration > 0:
+                # media_duration would be 0 e.g. for HLS livestreams, where seeking is impossible
                 self.slider_position.Enable()
 
     def close_file(self, *_):
@@ -211,10 +220,7 @@ class Main(wx.Frame):
 
     def set_position(self, pos):
         """Set the media time according to the time slider"""
-        if self.media_duration:
-            self.timer.Stop()
-            self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
-            self.timer.Start(POSITION_UPDATE_TIME_MS)
+        self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
 
     def update_ui(self, evt):
         """Update the time slider according to the current media time.

@@ -183,11 +183,14 @@ class Main(WinForms.Form):
         self.load_file(ofd.FileName)
 
     def load_file(self, filename):
+        if self.mediaplayer.has_media():
+            self.close_file()
         ok = self.mediaplayer.load_media_file(filename)
         if ok:
             self.media_duration = self.mediaplayer.get_duration()
             self.play_pause()
             self.Text = os.path.basename(filename)
+            # media_duration would be 0 e.g. for HLS livestreams, where seeking is impossible
             self.trackbar_position.Enabled = self.media_duration > 0
 
     def close_file(self, *_):
@@ -203,17 +206,15 @@ class Main(WinForms.Form):
         if self.mediaplayer.is_playing():
             self.mediaplayer.pause()
             self.button_play.Text = "Play"
-            self.is_paused = True
             self.timer.Stop()
+            self.is_paused = True
         else:
             if not self.mediaplayer.has_media():
-                self.open_file()
-                return
+                return self.open_file()
             self.mediaplayer.play()
             self.button_play.Text = "Pause"
-            self.is_paused = False
             self.timer.Start()
-        self.trackbar_position.Enabled = True
+            self.is_paused = False
 
     def stop(self, *_):
         """Stop player"""
@@ -231,10 +232,7 @@ class Main(WinForms.Form):
 
     def set_position(self, pos):
         """Set the media time according to the time slider"""
-        if self.media_duration:
-            self.timer.Stop()
-            self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
-            self.timer.Start()
+        self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
 
     def update_ui(self, *_):
         """Update the time slider according to the current media time.

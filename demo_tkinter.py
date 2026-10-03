@@ -16,13 +16,13 @@ class Timer():
     """
 
     def __init__(self, root, ms, callback):
-        self.root = root
+        self._root = root
         self._ms = ms
         self._callback = callback
 
     def start(self):
         self._running = True
-        self.root.after(self._ms, self._run)
+        self._root.after(self._ms, self._run)
 
     def stop(self):
         self._running = False
@@ -30,7 +30,7 @@ class Timer():
     def _run(self):
         if self._running:
             self._callback()
-            self.root.after(self._ms, self._run)
+            self._root.after(self._ms, self._run)
 
 
 class Main:
@@ -160,12 +160,11 @@ class Main:
         if self.mediaplayer.is_playing():
             self.mediaplayer.pause()
             self.button_play.config(text="Play")
-            self.is_paused = True
             self.timer.stop()
+            self.is_paused = True
         else:
             if not self.mediaplayer.has_media():
-                self.open_file()
-                return
+                return self.open_file()
             self.mediaplayer.play()
             self.button_play.config(text="Pause")
             self.timer.start()
@@ -186,11 +185,14 @@ class Main:
             self.load_file(res.name)
 
     def load_file(self, filename):
+        if self.mediaplayer.has_media():
+            self.close_file()
         ok = self.mediaplayer.load_media_file(filename)
         if ok:
             self.media_duration = self.mediaplayer.get_duration()
             self.play_pause()
             self.root.title(os.path.basename(filename))
+            # media_duration would be 0 e.g. for HLS livestreams, where seeking is impossible
             if self.media_duration > 0:
                 self.slider_position.config(state="normal")
 
@@ -213,9 +215,7 @@ class Main:
         if self.is_timer:
             self.is_timer = False
         else:
-            self.timer.stop()
             self.mediaplayer.set_time(self.media_duration * int(pos) / 2000.0)
-            self.timer.start()
 
     def update_ui(self):
         """Update the time slider according to the current media time.

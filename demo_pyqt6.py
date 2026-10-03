@@ -183,13 +183,11 @@ class Main(QtWidgets.QMainWindow):
         if self.mediaplayer.is_playing():
             self.mediaplayer.pause()
             self.button_play.setText("Play")
-            self.is_paused = True
             self.timer.stop()
+            self.is_paused = True
         else:
             if not self.mediaplayer.has_media():
-                self.open_file()
-                return
-
+                return self.open_file()
             self.mediaplayer.play()
             self.button_play.setText("Pause")
             self.timer.start()
@@ -212,11 +210,14 @@ class Main(QtWidgets.QMainWindow):
         self.load_file(filename)
 
     def load_file(self, filename):
+        if self.mediaplayer.has_media():
+            self.close_file()
         ok = self.mediaplayer.load_media_file(filename)
         if ok:
             self.media_duration = self.mediaplayer.get_duration()
             self.play_pause()
             self.setWindowTitle(os.path.basename(filename))
+            # media_duration would be 0 e.g. for HLS livestreams, where seeking is impossible
             self.slider_position.setEnabled(self.media_duration > 0)
 
     def close_file(self):
@@ -235,11 +236,7 @@ class Main(QtWidgets.QMainWindow):
     def set_position(self, pos):
         """Set the media time according to the time slider.
         """
-        if self.media_duration:
-            # Set the media position to where the slider was dragged
-            self.timer.stop()
-            self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
-            self.timer.start()
+        self.mediaplayer.set_time(self.media_duration * pos / 2000.0)
 
     def update_ui(self):
         """Update the time slider according to the current media time.
