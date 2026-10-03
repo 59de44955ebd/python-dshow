@@ -75,7 +75,7 @@ get_size() -> tuple
 get_time() -> float seconds
 get_volume() -> float  # 0..1
 
-set_aspect_ratio(ratio: str | None)  # e.g. '4:3', '' for use DAR, None for stretch to window
+set_aspect_ratio(ratio: str | None)  # e.g. '4:3', '' for use DAR (=default), None for stretch to window
 set_brightness(value: float)  # -1..1, 0=default
 set_contrast(value: float)  # -1..1, 0=default
 set_hue(value: float)  # -1..1, 0=default
