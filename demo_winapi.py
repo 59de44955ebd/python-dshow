@@ -121,7 +121,7 @@ class Main():
         hwnd_desktop = user32.GetDesktopWindow()
         rc = RECT()
         user32.GetClientRect(hwnd_desktop, byref(rc))
-        cx, cy = 640, 480
+        cx, cy = 654, 517
         x, y = (rc.right - cx) // 2, (rc.bottom - cy) // 2
 
         self.hwnd = user32.CreateWindowExW(

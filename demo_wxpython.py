@@ -43,7 +43,7 @@ class Main(wx.Frame):
 
         super().__init__(
             None, -1, title="Media Player",
-            pos=wx.DefaultPosition, size=(640, 480)
+            pos=wx.DefaultPosition, size=(654, 517)
         )
 
         self.SetMinSize((320, 125))

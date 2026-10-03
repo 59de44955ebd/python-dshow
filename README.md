@@ -90,7 +90,7 @@ has_video() -> bool
 
 is_midi() -> bool
 is_playing() -> bool
-is_seekable -> bool
+is_seekable() -> bool
 
 get_audio_tracks() -> list
 get_sub_tracks() -> list
@@ -122,4 +122,10 @@ All 7 demos implement basically the same application, a simple video player with
 - Double-click on video toggles fullscreen mode.
 
 *PyQt5 demo*  
-![](screenshots/demo.png)
+![](screenshots/demo_pyqt5.png)
+
+*Tkinter demo*  
+![](screenshots/demo_tkinter.png)
+
+*Windows API demo*  
+![](screenshots/demo_winapi.png)

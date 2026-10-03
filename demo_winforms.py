@@ -25,7 +25,7 @@ class Main(WinForms.Form):
         super().__init__()
 
         self.Text = "Media Player"
-        self.Size = Size(640, 480)
+        self.Size = Size(654, 517)
         self.MinimumSize = Size(320, 129)
         self.StartPosition = WinForms.FormStartPosition.CenterScreen
 
